@@ -5,6 +5,7 @@ const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 
+app.use(express.json())
 
 //connects to mongoDB
 let db;
