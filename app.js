@@ -41,7 +41,7 @@ app.get('/collection/lessons', (req, res, next) => { // connects to the lessons 
 app.post('/collection/orders', (req, res, next) => {
     db.collection('orders').insert(req.body, (e, results) => {
         if (e) return next(e)
-        res.send(results.ops)
+        res.send(results)
     })
 })
 
