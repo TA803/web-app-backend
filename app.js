@@ -58,4 +58,4 @@ app.put('/collection/lessons/:id', (req, res, next) => {
 
 
 //Listening on port 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 3030);
