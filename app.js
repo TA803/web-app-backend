@@ -5,8 +5,10 @@ const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
 
 //connects to mongoDB
+let url = "mongodb+srv://afterschlClub:AfterSchoolClub@cluster0.yboho.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
 let db;
-MongoClient.connect("mongodb+srv://afterschlClub:AfterschlClub@cluster0.yboho.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", (err, client) => {
+MongoClient.connect(url, (err, client) => {
     db = client.db("AfterSchoolClub")
 })
 
@@ -26,6 +28,24 @@ app.use(function(request, response, next) {
 app.get('/', (req, res) => {
     res.send("OK");
 });
+
+
+app.get('/collection/lessons', (req, res, next) => { // connects to the lessons in database
+    db.collection('lessons').find({}).toArray((e, results) => { //gets all lessons from database
+        if (e) return next(e) // error handling
+        res.send(results) // output results
+    })
+})
+
+
+app.post('/collection/orders', (req, res, next) => {
+    db.collection('orders').insert(req.body, (e, results) => {
+        if (e) return next(e)
+        res.send(results.ops)
+    })
+})
+
+
 
 //Listening on port 3030
 app.listen(3030);
