@@ -8,10 +8,8 @@ const ObjectId = require("mongodb").ObjectId;
 
 
 //connects to mongoDB
-let url = "mongodb+srv://afterschlClub:AfterSchoolClub@cluster0.yboho.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
 let db;
-MongoClient.connect(url, (err, client) => {
+MongoClient.connect(process.env.databaseURL, (err, client) => {
     db = client.db("AfterSchoolClub")
 })
 
@@ -59,5 +57,5 @@ app.put('/collection/lessons/:id', (req, res, next) => {
 })
 
 
-//Listening on port 3030
-app.listen(3030);
+//Listening on port 
+app.listen(process.env.PORT);
