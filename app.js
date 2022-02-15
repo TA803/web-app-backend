@@ -2,7 +2,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { ObjectId } = require("bson");
 const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectId;
+
 
 //connects to mongoDB
 let url = "mongodb+srv://afterschlClub:AfterSchoolClub@cluster0.yboho.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
@@ -37,7 +40,7 @@ app.get('/collection/lessons', (req, res, next) => { // connects to the lessons 
     })
 })
 
-
+//adds into order database
 app.post('/collection/orders', (req, res, next) => {
     db.collection('orders').insert(req.body, (e, results) => {
         if (e) return next(e)
@@ -45,6 +48,15 @@ app.post('/collection/orders', (req, res, next) => {
     })
 })
 
+
+//updates lessons space
+app.put('/collection/lessons/:id', (req, res, next) => {
+    db.collection('lessons').update({ _id: new ObjectId(req.params.id) }, { $set: req.body.space }, { safe: true, multi: false },
+        (e, result) => {
+            if (e) return next(e)
+            res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
+        })
+})
 
 
 //Listening on port 3030
