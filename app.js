@@ -2,7 +2,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const { ObjectId } = require("bson");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 
