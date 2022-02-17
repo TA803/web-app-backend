@@ -53,7 +53,7 @@ app.put('/collection/lessons/:id', (req, res, next) => {
     db.collection('lessons').update({ _id: new ObjectId(req.params.id) }, { $set: { space: req.body.space } }, { safe: true, multi: false },
         (e, result) => {
             if (e) return next(e)
-            res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
+            res.send(result)
         })
 })
 
