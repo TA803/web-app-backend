@@ -5,6 +5,7 @@ const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 
+//allows to access request body
 app.use(express.json())
 
 //connects to mongoDB
@@ -49,7 +50,7 @@ app.post('/collection/orders', (req, res, next) => {
 
 //updates lessons space
 app.put('/collection/lessons/:id', (req, res, next) => {
-    db.collection('lessons').update({ _id: new ObjectId(req.params.id) }, { $set: req.body.space }, { safe: true, multi: false },
+    db.collection('lessons').update({ _id: new ObjectId(req.params.id) }, { $set: { space: req.body.space } }, { safe: true, multi: false },
         (e, result) => {
             if (e) return next(e)
             res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
